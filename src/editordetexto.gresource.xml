@@ -2,5 +2,6 @@
 <gresources>
   <gresource prefix="/com/github/pedromiguel_dev/texteditorclone">
     <file preprocess="xml-stripblanks">gtk/help-overlay.ui</file>
+    <file>style.css</file>
   </gresource>
 </gresources>

@@ -26,10 +26,39 @@ namespace Editordetexto {
 
         construct {
             var content = new Gtk.Box (Gtk.Orientation.VERTICAL, 0){
-                vexpand = true
+                vexpand = true,
+                css_classes = {"white-bg"}
             };
+            //header bar
             var headerbar = new Adw.HeaderBar ();
             content.append (headerbar);
+
+            //open button
+            var open_button = new Gtk.Button.with_label ("Open");
+            headerbar.pack_start (open_button);
+
+            //tab button
+            var tab_button = new Gtk.Button.from_icon_name ("tab-new-symbolic");
+            headerbar.pack_start (tab_button);
+
+            //menu button
+            var menu_button = new Gtk.Button.from_icon_name ("open-menu-symbolic");
+            headerbar.pack_end (menu_button);
+
+            //save button
+            var save_button = new Gtk.Button.from_icon_name ("document-save-symbolic");
+            headerbar.pack_end (save_button);
+
+            //text view
+            var textview = new Gtk.TextView () {
+                vexpand = true,
+                margin_top = 10,
+                margin_bottom = 10,
+                margin_start = 10,
+                margin_end = 10
+            };
+            content.append (textview);
+
             this.set_content (content);
         }
     }
