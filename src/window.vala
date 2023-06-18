@@ -20,6 +20,8 @@
 
 namespace Editordetexto {
     public class Window : Adw.ApplicationWindow {
+        private Gtk.TextView textview;
+
         public Window (Gtk.Application app) {
             Object (application: app);
         }
@@ -35,6 +37,7 @@ namespace Editordetexto {
 
             //open button
             var open_button = new Gtk.Button.with_label ("Open");
+            open_button.clicked.connect (on_open);
             headerbar.pack_start (open_button);
 
             //tab button
@@ -49,17 +52,64 @@ namespace Editordetexto {
             var save_button = new Gtk.Button.from_icon_name ("document-save-symbolic");
             headerbar.pack_end (save_button);
 
+            Gtk.ScrolledWindow ScrolledWindow = new Gtk.ScrolledWindow ();
             //text view
-            var textview = new Gtk.TextView () {
+            textview = new Gtk.TextView () {
                 vexpand = true,
                 margin_top = 10,
-                margin_bottom = 10,
+                margin_bottom = 0,
                 margin_start = 10,
                 margin_end = 10
             };
-            content.append (textview);
+            ScrolledWindow.child = textview;
+            content.append (ScrolledWindow);
 
             this.set_content (content);
+        }
+
+        private void on_open () {
+            var dialog = new Gtk.FileDialog ();
+            dialog.title = "Open file";
+            dialog.modal = true;
+
+            dialog.open.begin (this, null, (obj, response) => {
+              try {
+                var file = dialog.open.end (response);
+
+                if (file == null) {
+                  debug ("No file selected, or no path available");
+                  return;
+                }
+
+                print("Selected file: %s\n".printf (file.get_path()) );
+                import_file.begin (file.get_path ());
+
+              } catch (Error error) {
+                switch (error.code) {
+                  case Gtk.DialogError.CANCELLED:
+                  case Gtk.DialogError.DISMISSED:
+                    print ("Dismissed opening file: %s", error.message);
+                    break;
+                  case Gtk.DialogError.FAILED:
+                  default:
+                    print ("Could not open file: %s", error.message);
+                    break;
+                }
+              }
+            });
+        }
+
+        private async void import_file (string file_path) {
+            string text;
+
+            try {
+                GLib.FileUtils.get_contents (file_path, out text);
+            } catch (GLib.FileError error) {
+                print(error.message);
+                warning (error.message);
+            };
+
+            textview.buffer.text = text;
         }
     }
 }
