@@ -1,0 +1,6 @@
+data/com.github.pedromiguel_dev.texteditorclone.desktop.in
+data/com.github.pedromiguel_dev.texteditorclone.appdata.xml.in
+data/com.github.pedromiguel_dev.texteditorclone.gschema.xml
+src/main.vala
+src/window.vala
+src/window.ui

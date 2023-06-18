@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=editordetexto
+Exec=editordetexto
+Icon=com.github.pedromiguel_dev.texteditorclone
+Terminal=false
+Type=Application
+Categories=GTK;
+StartupNotify=true

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="editordetexto">
+	<schema id="com.github.pedromiguel_dev.texteditorclone" path="/com/github/pedromiguel_dev/texteditorclone/">
+	</schema>
+</schemalist>
